@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RPC GAME</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-12">
+                <h1>Welcome to our RPS GAME</h1>
+                <hr>
+            </div>
+            <div class="col-lg-12">
+                <div class="genscore" style="display: none">
+                    <h2>GENERAL SCORE</h2>
+                    <h3 style="display: inline;">You: <span id="ys"></span></h3>
+                    <h3 style="display: inline;">Comp: <span id="cs"></span></h3>
+                    <hr>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <h4 class="ekran"></h4>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <button type="button" class="btn btn-info" id="button1">PLAY</button>
+                <button type="button" class="btn btn-info" id="button2">SCORE</button>
+                <button type="button" class="btn btn-danger" id="button3">RESET</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var compScore = 0
+        var playerScore = 0
+
+        var ys = document.querySelector("#ys")
+        ys.innerHTML = playerScore + " \xa0\xa0 - \xa0\xa0 "
+        
+        var cs = document.querySelector("#cs")
+        cs.innerHTML = compScore
+
+        var playbtn = window.document.querySelector("#button1")
+        playbtn.onclick = oyun
+
+        var scorebtn = window.document.querySelector("#button2")
+        scorebtn.onclick = skoryazdir
+
+        var resetbtn = window.document.querySelector("#button3")
+        resetbtn.onclick = resetat
+
+        function resetat() {
+            compScore = 0
+            playerScore = 0
+
+            var yazdir = document.querySelector(".ekran")
+            yazdir.innerHTML = ""
+            ys.innerHTML = playerScore + " \xa0\xa0 - \xa0\xa0 "
+            cs.innerHTML = compScore
+            document.querySelector(".genscore").style = "display: none;"
+        }
+        
+        function skoryazdir(){
+            document.querySelector(".genscore").style = "display: content;"
+        }
+
+        function oyun(){
+            var compwin = false
+            var playwin = false
+
+            var choises = ["r","p","s"]
+            var choisesNames = ["ROCK", "PAPER", "SCISSORS"]
+            var secimPure = prompt("Choose one: r / p / s ")
+
+            var secim = secimPure.toLowerCase()
+
+            var compInd = Math.floor(Math.random()*3)
+
+            if (choises[compInd] == secim){
+                playerScore+=1
+                compScore+=1
+            }
+            else if(choises[compInd] == "r"){
+                if(secim == "p"){
+                    playwin=true
+                    playerScore+=2
+                }
+                else if(secim == "s"){
+                    compwin=true
+                    compScore+=2
+                }
+            }
+            else if(choises[compInd] == "p"){
+                if(secim == "s"){
+                    playwin=true
+                    playerScore+=2
+                }
+                else if(secim == "r"){
+                    compwin=true
+                    compScore+=2
+                }
+            }
+            else if(choises[compInd] == "s"){
+                if(secim == "r"){
+                    playwin=true
+                    playerScore+=2
+                }
+                else if(secim == "p"){
+                    compwin=true
+                    compScore+=2
+                }
+            }
+            if(playwin==compwin){
+                sonuc = "DRAW"
+            }
+            else if(playwin){
+                sonuc = "YOU WIN!"
+            }
+            else{
+                sonuc = "YOU LOSE!"
+            }
+
+            ys.innerHTML = playerScore + " \xa0\xa0 - \xa0\xa0 "
+            cs.innerHTML = compScore
+            var yazdir = document.querySelector(".ekran")
+            yazdir.innerHTML = "Your choise: " + choisesNames[choises.indexOf(secim)]  + " \xa0\xa0 Comp choise: " + choisesNames[choises.indexOf(choises[compInd])] + " <br><br> " + sonuc
+        }    
+    </script>
+</body>
+</html>
